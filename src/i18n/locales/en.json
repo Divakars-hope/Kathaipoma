@@ -1,0 +1,91 @@
+{
+  "app": {
+    "name": "Kathaipoma",
+    "tagline": "Your Health Matters."
+  },
+  "nav": {
+    "home": "Home",
+    "education": "Learn",
+    "screenings": "Screenings",
+    "about": "About & Privacy"
+  },
+  "landing": {
+    "heroHeadline": "Your Health Matters.",
+    "heroSub": "Private. Safe. Free. No login required.",
+    "startScreening": "Start Screening",
+    "learnMore": "Learn About Women's Health",
+    "trustBar": "No name. No phone number. No account. Ever.",
+    "modulesTitle": "Choose a screening",
+    "breastCancer": "Breast Cancer Awareness",
+    "breastCancerDesc": "A short, gentle questionnaire to understand your risk factors.",
+    "pcos": "PCOS Screening",
+    "pcosDesc": "Check symptoms related to periods, weight and hormones.",
+    "menopause": "Menopause Guide",
+    "menopauseDesc": "Understand what stage you may be in and what to expect."
+  },
+  "assistant": {
+    "name": "Kathaipoma AI",
+    "greeting": "Hello, I'm Kathaipoma AI. I'm here to explain every question in simple words. You can also listen instead of reading.",
+    "close": "Close assistant"
+  },
+  "consent": {
+    "title": "Before we begin",
+    "point1": "We never ask your name.",
+    "point2": "We never ask your phone number.",
+    "point3": "We never store your personal identity.",
+    "note": "Your anonymous answers may be used only to improve Kathaipoma AI.",
+    "checkbox": "I understand and I agree to continue anonymously.",
+    "continue": "Continue"
+  },
+  "common": {
+    "next": "Next",
+    "back": "Back",
+    "listenEnglish": "Listen in English",
+    "listenTamil": "Listen in Tamil",
+    "stop": "Stop",
+    "submit": "See my results",
+    "restart": "Start over",
+    "selectOne": "Select one",
+    "years": "years",
+    "yes": "Yes",
+    "no": "No",
+    "notSure": "Not sure",
+    "downloadPdf": "Download PDF",
+    "shareWithDoctor": "Share with doctor",
+    "backHome": "Back to home"
+  },
+  "emergency": {
+    "title": "This may require immediate medical attention.",
+    "body": "Based on some of your answers, please speak with a qualified doctor as soon as possible.",
+    "disclaimer": "This application cannot diagnose diseases. It only raises awareness."
+  },
+  "results": {
+    "title": "Your results",
+    "riskLevel": "Risk level",
+    "low": "Low",
+    "moderate": "Moderate",
+    "high": "High — please see a doctor",
+    "healthScore": "Health awareness score",
+    "recommendations": "Recommendations",
+    "lifestyle": "Lifestyle tips",
+    "diet": "Diet",
+    "exercise": "Exercise",
+    "seeDoctor": "Please consult a qualified doctor for a proper diagnosis.",
+    "disclaimer": "Kathaipoma is an awareness and preliminary screening tool, not a medical diagnosis."
+  },
+  "education": {
+    "title": "Learn about women's health",
+    "myths": "Myth vs Truth",
+    "whenToVisit": "When to visit a doctor",
+    "emergencySymptoms": "Emergency symptoms"
+  },
+  "about": {
+    "title": "About & Privacy",
+    "body1": "Kathaipoma is an anonymous women's health awareness and preliminary screening companion. It is not a hospital, and it does not diagnose disease.",
+    "body2": "No login, no account, no password. We do not collect your name, phone number, or identity. Anonymous answers may be used only to improve Kathaipoma AI.",
+    "body3": "No tracking cookies, no advertisements, no selling of data."
+  },
+  "footer": {
+    "disclaimer": "Kathaipoma provides awareness and preliminary screening only. It is not a substitute for diagnosis by a qualified doctor."
+  }
+}

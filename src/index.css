@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-body text-ink-900 bg-white;
+  background: radial-gradient(circle at 20% 0%, #FDF2F8 0%, #FFFFFF 45%),
+    radial-gradient(circle at 100% 100%, #F1EEFB 0%, #FFFFFF 55%);
+  min-height: 100vh;
+}
+
+/* Respect reduced-motion users: kill the floating background & big transitions */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.glass-card {
+  @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-glass rounded-xl2;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5
+    font-display font-semibold text-white shadow-soft transition-transform
+    bg-gradient-to-r from-blossom-400 to-blossom-500
+    hover:scale-[1.03] active:scale-[0.98]
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blossom-500;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5
+    font-display font-semibold text-blossom-500 bg-white border-2 border-blossom-200
+    transition-transform hover:scale-[1.03] hover:border-blossom-300 active:scale-[0.98]
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blossom-500;
+}
+
+/* Visible keyboard focus everywhere, even where a component forgets to add it */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid #DB2C7A;
+  outline-offset: 2px;
+}

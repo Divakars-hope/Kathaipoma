@@ -1,0 +1,140 @@
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Download, RefreshCcw, ArrowLeft } from 'lucide-react'
+import { MODULES, type ModuleId } from '../data/questions'
+import { scoreModule } from '../data/riskEngine'
+import { RECOMMENDATIONS, riskLevelSuggestsDoctorVisit } from '../data/recommendations'
+import RiskMeter from '../components/RiskMeter'
+import EmergencyWarning from '../components/EmergencyWarning'
+
+export default function Results() {
+  const { moduleId } = useParams<{ moduleId: ModuleId }>()
+  const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isTa = i18n.language === 'ta'
+
+  const mod = moduleId ? MODULES[moduleId] : undefined
+  const answers = (location.state as { answers?: Record<string, string> } | null)?.answers
+
+  if (!mod || !answers) {
+    return (
+      <div className="max-w-lg mx-auto px-6 py-24 text-center">
+        <p className="font-body text-ink-700 mb-6">
+          No results to show yet — please complete a screening first.
+        </p>
+        <button onClick={() => navigate('/')} className="btn-primary">
+          {t('common.backHome')}
+        </button>
+      </div>
+    )
+  }
+
+  const result = scoreModule(mod.id, answers)
+  const rec = RECOMMENDATIONS[mod.id]
+  const showDoctorNote = riskLevelSuggestsDoctorVisit(result.level)
+
+  const downloadPdf = async () => {
+    const { default: jsPDF } = await import('jspdf')
+    const doc = new jsPDF()
+    const title = isTa ? mod.titleTa : mod.titleEn
+    let y = 20
+    doc.setFontSize(16)
+    doc.text('Kathaipoma - ' + title, 14, y)
+    y += 10
+    doc.setFontSize(11)
+    doc.text(`Health awareness score: ${result.healthScore}/100`, 14, y)
+    y += 7
+    doc.text(`Risk level: ${result.level.toUpperCase()}`, 14, y)
+    y += 10
+    doc.setFontSize(12)
+    doc.text('Lifestyle tips:', 14, y)
+    y += 7
+    doc.setFontSize(10)
+    ;(isTa ? rec.tipsTa : rec.tipsEn).forEach((line) => {
+      const wrapped = doc.splitTextToSize(`- ${line}`, 180)
+      doc.text(wrapped, 14, y)
+      y += wrapped.length * 5.5
+    })
+    y += 5
+    doc.setFontSize(9)
+    doc.setTextColor(150)
+    doc.text(
+      doc.splitTextToSize(
+        'Kathaipoma is an awareness and preliminary screening tool, not a medical diagnosis. Please consult a qualified doctor.',
+        180
+      ),
+      14,
+      y
+    )
+    doc.save(`kathaipoma-${mod.id}-results.pdf`)
+  }
+
+  return (
+    <div className="max-w-xl mx-auto px-6 py-10">
+      <button
+        onClick={() => navigate('/')}
+        className="flex items-center gap-1 text-sm font-friendly text-ink-700/70 hover:text-blossom-500 mb-6"
+      >
+        <ArrowLeft size={16} aria-hidden="true" /> {t('common.backHome')}
+      </button>
+
+      <h1 className="font-display font-bold text-2xl text-ink-900 mb-1">{t('results.title')}</h1>
+      <p className="text-sm font-body text-ink-700/70 mb-6">{isTa ? mod.titleTa : mod.titleEn}</p>
+
+      {result.emergency && <EmergencyWarning />}
+
+      <RiskMeter level={result.level} score={result.healthScore} />
+
+      <div className="glass-card p-6 mt-6">
+        <h2 className="font-display font-semibold text-ink-900 mb-3">{t('results.diet')}</h2>
+        <ul className="space-y-2 text-sm font-friendly text-ink-700">
+          {(isTa ? rec.dietTa : rec.dietEn).map((line) => (
+            <li key={line} className="flex gap-2">
+              <span className="text-blossom-400">•</span> {line}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="glass-card p-6 mt-4">
+        <h2 className="font-display font-semibold text-ink-900 mb-3">{t('results.exercise')}</h2>
+        <ul className="space-y-2 text-sm font-friendly text-ink-700">
+          {(isTa ? rec.exerciseTa : rec.exerciseEn).map((line) => (
+            <li key={line} className="flex gap-2">
+              <span className="text-blossom-400">•</span> {line}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="glass-card p-6 mt-4">
+        <h2 className="font-display font-semibold text-ink-900 mb-3">{t('results.lifestyle')}</h2>
+        <ul className="space-y-2 text-sm font-friendly text-ink-700">
+          {(isTa ? rec.tipsTa : rec.tipsEn).map((line) => (
+            <li key={line} className="flex gap-2">
+              <span className="text-blossom-400">•</span> {line}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {showDoctorNote && (
+        <p className="text-sm font-friendly text-blossom-600 bg-blossom-50 rounded-xl2 p-4 mt-6 text-center">
+          {t('results.seeDoctor')}
+        </p>
+      )}
+
+      <p className="text-xs text-ink-700/60 font-body text-center mt-6">{t('results.disclaimer')}</p>
+
+      <div className="flex flex-wrap gap-3 mt-8">
+        <button onClick={downloadPdf} className="btn-secondary flex-1">
+          <Download size={16} aria-hidden="true" /> {t('common.downloadPdf')}
+        </button>
+        <button onClick={() => navigate(`/screening/${mod.id}`)} className="btn-primary flex-1">
+          <RefreshCcw size={16} aria-hidden="true" /> {t('common.restart')}
+        </button>
+      </div>
+    </div>
+  )
+}
