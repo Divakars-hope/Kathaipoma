@@ -9,8 +9,8 @@ export default function Navbar() {
     <header className="relative z-20">
       <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-display font-bold text-xl text-blossom-500">
-          <span aria-hidden="true">♀</span>
-          <span>{t('app.name')}</span>
+        <img src="/icons/apple-touch-icon.png" alt="Kathaipoma logo" className="h-9 w-9 rounded-full" />
+        <span>{t('app.name')}</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 font-body text-sm text-ink-700">
           <Link to="/" className="hover:text-blossom-500 transition-colors">{t('nav.home')}</Link>
