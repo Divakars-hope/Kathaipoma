@@ -6,13 +6,15 @@ import { scoreModule } from '../data/riskEngine'
 import { RECOMMENDATIONS, riskLevelSuggestsDoctorVisit } from '../data/recommendations'
 import RiskMeter from '../components/RiskMeter'
 import EmergencyWarning from '../components/EmergencyWarning'
+import ResultsFeedback from '../components/ResultsFeedback'
+import { currentAppLanguage, pickLang } from '../utils/localize'
 
 export default function Results() {
   const { moduleId } = useParams<{ moduleId: ModuleId }>()
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
-  const isTa = i18n.language === 'ta'
+  const lang = currentAppLanguage(i18n.language)
 
   const mod = moduleId ? MODULES[moduleId] : undefined
   const answers = (location.state as { answers?: Record<string, string> } | null)?.answers
@@ -37,7 +39,7 @@ export default function Results() {
   const downloadPdf = async () => {
     const { default: jsPDF } = await import('jspdf')
     const doc = new jsPDF()
-    const title = isTa ? mod.titleTa : mod.titleEn
+    const title = pickLang(lang, mod.titleEn, mod.titleTa, mod.titleHi)
     let y = 20
     doc.setFontSize(16)
     doc.text('Kathaipoma - ' + title, 14, y)
@@ -51,7 +53,7 @@ export default function Results() {
     doc.text('Lifestyle tips:', 14, y)
     y += 7
     doc.setFontSize(10)
-    ;(isTa ? rec.tipsTa : rec.tipsEn).forEach((line) => {
+    ;(lang === 'ta' ? rec.tipsTa : lang === 'hi' ? rec.tipsHi : rec.tipsEn).forEach((line) => {
       const wrapped = doc.splitTextToSize(`- ${line}`, 180)
       doc.text(wrapped, 14, y)
       y += wrapped.length * 5.5
@@ -80,7 +82,7 @@ export default function Results() {
       </button>
 
       <h1 className="font-display font-bold text-2xl text-ink-900 mb-1">{t('results.title')}</h1>
-      <p className="text-sm font-body text-ink-700/70 mb-6">{isTa ? mod.titleTa : mod.titleEn}</p>
+      <p className="text-sm font-body text-ink-700/70 mb-6">{pickLang(lang, mod.titleEn, mod.titleTa, mod.titleHi)}</p>
 
       {result.emergency && <EmergencyWarning />}
 
@@ -89,7 +91,7 @@ export default function Results() {
       <div className="glass-card p-6 mt-6">
         <h2 className="font-display font-semibold text-ink-900 mb-3">{t('results.diet')}</h2>
         <ul className="space-y-2 text-sm font-friendly text-ink-700">
-          {(isTa ? rec.dietTa : rec.dietEn).map((line) => (
+          {(lang === 'ta' ? rec.dietTa : lang === 'hi' ? rec.dietHi : rec.dietEn).map((line) => (
             <li key={line} className="flex gap-2">
               <span className="text-blossom-400">•</span> {line}
             </li>
@@ -100,7 +102,7 @@ export default function Results() {
       <div className="glass-card p-6 mt-4">
         <h2 className="font-display font-semibold text-ink-900 mb-3">{t('results.exercise')}</h2>
         <ul className="space-y-2 text-sm font-friendly text-ink-700">
-          {(isTa ? rec.exerciseTa : rec.exerciseEn).map((line) => (
+          {(lang === 'ta' ? rec.exerciseTa : lang === 'hi' ? rec.exerciseHi : rec.exerciseEn).map((line) => (
             <li key={line} className="flex gap-2">
               <span className="text-blossom-400">•</span> {line}
             </li>
@@ -111,7 +113,7 @@ export default function Results() {
       <div className="glass-card p-6 mt-4">
         <h2 className="font-display font-semibold text-ink-900 mb-3">{t('results.lifestyle')}</h2>
         <ul className="space-y-2 text-sm font-friendly text-ink-700">
-          {(isTa ? rec.tipsTa : rec.tipsEn).map((line) => (
+          {(lang === 'ta' ? rec.tipsTa : lang === 'hi' ? rec.tipsHi : rec.tipsEn).map((line) => (
             <li key={line} className="flex gap-2">
               <span className="text-blossom-400">•</span> {line}
             </li>
@@ -135,6 +137,8 @@ export default function Results() {
           <RefreshCcw size={16} aria-hidden="true" /> {t('common.restart')}
         </button>
       </div>
+
+      <ResultsFeedback moduleId={mod.id} />
     </div>
   )
 }

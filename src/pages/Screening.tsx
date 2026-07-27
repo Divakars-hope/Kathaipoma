@@ -6,12 +6,13 @@ import { ChevronLeft } from 'lucide-react'
 import { MODULES, type ModuleId } from '../data/questions'
 import ConsentGate from '../components/ConsentGate'
 import SpeakButton from '../components/SpeakButton'
+import { currentAppLanguage, pickLang } from '../utils/localize'
 
 export default function Screening() {
   const { moduleId } = useParams<{ moduleId: ModuleId }>()
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
-  const isTa = i18n.language === 'ta'
+  const lang = currentAppLanguage(i18n.language)
 
   const mod = moduleId ? MODULES[moduleId] : undefined
 
@@ -74,7 +75,7 @@ export default function Screening() {
       </button>
 
       <h1 className="font-display font-semibold text-xl text-ink-900 mb-1">
-        {isTa ? mod.titleTa : mod.titleEn}
+        {pickLang(lang, mod.titleEn, mod.titleTa, mod.titleHi)}
       </h1>
       <p className="text-xs font-friendly text-ink-700/60 mb-5">
         {step + 1} / {mod.questions.length}
@@ -98,10 +99,15 @@ export default function Screening() {
           className="glass-card p-7"
         >
           <p className="font-display font-semibold text-lg text-ink-900 leading-snug">
-            {isTa ? question.textTa : question.textEn}
+            {pickLang(lang, question.textEn, question.textTa, question.textHi)}
           </p>
 
-          <SpeakButton className="mt-4" textEn={question.textEn} textTa={question.textTa} />
+          <SpeakButton
+            className="mt-4"
+            textEn={question.textEn}
+            textTa={question.textTa}
+            textHi={question.textHi}
+          />
 
           <fieldset className="mt-6 space-y-3">
             <legend className="sr-only">{t('common.selectOne')}</legend>
@@ -124,7 +130,7 @@ export default function Screening() {
                     onChange={() => choose(opt.value)}
                     className="h-4 w-4 accent-blossom-500"
                   />
-                  {isTa ? opt.labelTa : opt.labelEn}
+                  {pickLang(lang, opt.labelEn, opt.labelTa, opt.labelHi)}
                 </label>
               )
             })}

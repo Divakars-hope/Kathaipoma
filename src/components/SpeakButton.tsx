@@ -7,6 +7,8 @@ interface SpeakButtonProps {
   textEn: string
   /** Text to read aloud in Tamil */
   textTa: string
+  /** Text to read aloud in Hindi (optional — falls back to English audio if omitted or if no Hindi voice is available on the device) */
+  textHi?: string
   className?: string
 }
 
@@ -15,7 +17,7 @@ interface SpeakButtonProps {
  * using the browser's built-in SpeechSynthesis API — no server round trip,
  * so it keeps working on a weak rural connection.
  */
-export default function SpeakButton({ textEn, textTa, className = '' }: SpeakButtonProps) {
+export default function SpeakButton({ textEn, textTa, textHi, className = '' }: SpeakButtonProps) {
   const { i18n, t } = useTranslation()
   const [speaking, setSpeaking] = useState(false)
   const supported = typeof window !== 'undefined' && 'speechSynthesis' in window
@@ -26,12 +28,43 @@ export default function SpeakButton({ textEn, textTa, className = '' }: SpeakBut
     }
   }, [supported])
 
-  const speak = (lang: 'en' | 'ta') => {
+  const hasVoiceFor = (langPrefix: string) => {
+    if (!supported) return false
+    try {
+      const voices = window.speechSynthesis.getVoices()
+      return voices.some((v) => v.lang.toLowerCase().startsWith(langPrefix))
+    } catch {
+      // If the voice list can't be read, don't block speech — let the
+      // browser attempt it with its default voice instead of failing.
+      return true
+    }
+  }
+
+  const speak = (lang: 'en' | 'ta' | 'hi') => {
     if (!supported) return
     window.speechSynthesis.cancel()
-    const text = lang === 'ta' ? textTa : textEn
+
+    let text = textEn
+    let speechLang = 'en-IN'
+
+    if (lang === 'ta') {
+      text = textTa
+      speechLang = 'ta-IN'
+    } else if (lang === 'hi') {
+      // Gracefully fall back to English audio if there's no Hindi text
+      // provided yet, or no Hindi voice installed on this device — never
+      // let a missing Hindi voice break the app or go silent unexplained.
+      if (textHi && hasVoiceFor('hi')) {
+        text = textHi
+        speechLang = 'hi-IN'
+      } else {
+        text = textEn
+        speechLang = 'en-IN'
+      }
+    }
+
     const utterance = new SpeechSynthesisUtterance(text)
-    utterance.lang = lang === 'ta' ? 'ta-IN' : 'en-IN'
+    utterance.lang = speechLang
     utterance.rate = 0.95
     utterance.onend = () => setSpeaking(false)
     utterance.onerror = () => setSpeaking(false)
@@ -64,6 +97,16 @@ export default function SpeakButton({ textEn, textTa, className = '' }: SpeakBut
       >
         <Volume2 size={16} aria-hidden="true" /> தமிழ்
       </button>
+      {textHi && (
+        <button
+          type="button"
+          onClick={() => speak('hi')}
+          aria-label="हिन्दी में सुनें"
+          className="flex items-center gap-1.5 rounded-full bg-lavender-100 hover:bg-lavender-200 text-ink-700 px-3.5 py-2 text-sm font-friendly font-semibold transition-colors"
+        >
+          <Volume2 size={16} aria-hidden="true" /> हिन्दी
+        </button>
+      )}
       {speaking && (
         <button
           type="button"

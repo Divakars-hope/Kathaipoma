@@ -45,6 +45,7 @@ export default function AIAssistant() {
               className="mt-4"
               textEn="Hello, I'm Kathaipoma AI. I'm here to explain every question in simple words. You can also listen instead of reading."
               textTa="வணக்கம், நான் கதைபோமா AI. ஒவ்வொரு கேள்வியையும் எளிய வார்த்தைகளில் விளக்க இங்கே இருக்கிறேன்."
+              textHi="नमस्ते, मैं कथाइपोमा AI हूं। मैं हर सवाल को सरल शब्दों में समझाने के लिए यहां हूं। आप पढ़ने के बजाय सुन भी सकती हैं।"
             />
           </motion.div>
         )}

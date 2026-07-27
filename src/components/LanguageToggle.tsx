@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 export default function LanguageToggle() {
   const { i18n } = useTranslation()
 
-  const setLang = (lng: 'en' | 'ta') => {
+  const setLang = (lng: 'en' | 'ta' | 'hi') => {
     i18n.changeLanguage(lng)
   }
 
@@ -34,6 +34,17 @@ export default function LanguageToggle() {
         }`}
       >
         தமிழ்
+      </button>
+      <button
+        onClick={() => setLang('hi')}
+        aria-pressed={i18n.language === 'hi'}
+        className={`px-3 py-1.5 rounded-full text-sm font-display font-semibold transition-colors ${
+          i18n.language === 'hi'
+            ? 'bg-blossom-400 text-white'
+            : 'text-ink-700 hover:text-blossom-500'
+        }`}
+      >
+        हिन्दी
       </button>
     </div>
   )

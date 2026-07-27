@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Apply these in the Firebase Console: Firestore Database → Rules.
+//
+// Anyone can SUBMIT feedback (no login, matching Kathaipoma's anonymous
+// design) but no one can read, edit, or delete it through the client SDK —
+// only via the Firebase Console or an authenticated admin tool, keeping
+// feedback private to the people who need to act on it.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /feedback/{feedbackId} {
+      allow create: if request.resource.data.message is string
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() <= 2000
+                    && request.resource.data.rating is int
+                    && request.resource.data.rating >= 1
+                    && request.resource.data.rating <= 5;
+      allow read, update, delete: if false;
+    }
+  }
+}
