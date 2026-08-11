@@ -38,7 +38,15 @@ export default function Results() {
 
   const downloadPdf = async () => {
     const { default: jsPDF } = await import('jspdf')
+    const { registerPdfFonts, setPdfLangFont } = await import('../utils/pdfLang')
     const doc = new jsPDF()
+
+    // jsPDF's built-in fonts only cover Latin glyphs — without this,
+    // Tamil and Hindi text in the downloaded PDF shows as boxes or the
+    // wrong symbols instead of the actual script.
+    registerPdfFonts(doc)
+    setPdfLangFont(doc, lang)
+
     const title = pickLang(lang, mod.titleEn, mod.titleTa, mod.titleHi)
     let y = 20
     doc.setFontSize(16)

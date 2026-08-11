@@ -7,7 +7,8 @@
     "home": "Home",
     "education": "Learn",
     "screenings": "Screenings",
-    "about": "About & Privacy"
+    "about": "About & Privacy",
+    "feedback": "Feedback"
   },
   "landing": {
     "heroHeadline": "Your Health Matters.",
@@ -52,7 +53,11 @@
     "notSure": "Not sure",
     "downloadPdf": "Download PDF",
     "shareWithDoctor": "Share with doctor",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "listenHindi": "Listen in Hindi",
+    "voiceFallbackTa": "Tamil voice not found on this device — playing in English instead.",
+    "voiceFallbackHi": "Hindi voice not found on this device — playing in English instead.",
+    "voiceUnsupported": "Voice playback isn’t supported in this browser. Try Chrome, Safari, or Brave."
   },
   "emergency": {
     "title": "This may require immediate medical attention.",
@@ -84,6 +89,21 @@
     "body1": "Kathaipoma is an anonymous women's health awareness and preliminary screening companion. It is not a hospital, and it does not diagnose disease.",
     "body2": "No login, no account, no password. We do not collect your name, phone number, or identity. Anonymous answers may be used only to improve Kathaipoma AI.",
     "body3": "No tracking cookies, no advertisements, no selling of data."
+  },
+  "feedback": {
+    "title": "Share your feedback",
+    "subtitle": "Help us improve Kathaipoma — your feedback is anonymous.",
+    "notConfigured": "The feedback backend isn't set up yet. See .env.example in the project for setup steps.",
+    "ratingLabel": "How helpful was Kathaipoma?",
+    "aboutLabel": "What is this about?",
+    "aboutGeneral": "General feedback",
+    "messageLabel": "Your feedback",
+    "messagePlaceholder": "Tell us what worked well or what could be better...",
+    "anonymousNote": "This feedback is sent anonymously. We do not collect your name, phone number, or identity.",
+    "submit": "Send feedback",
+    "sending": "Sending...",
+    "thanks": "Thank you — your feedback helps us improve Kathaipoma.",
+    "sendAnother": "Send another"
   },
   "footer": {
     "disclaimer": "Kathaipoma provides awareness and preliminary screening only. It is not a substitute for diagnosis by a qualified doctor."
