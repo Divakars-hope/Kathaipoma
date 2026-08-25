@@ -144,9 +144,9 @@ export const MODULES: Record<ModuleId, ModuleDefinition> = {
       },
       {
         id: 'hairGrowth',
-        textEn: 'Excess hair growth on face, chest, or back?',
-        textTa: 'முகம், மார்பு அல்லது முதுகில் அதிக முடி வளர்ச்சி உள்ளதா?',
-        textHi: 'चेहरे, छाती या पीठ पर अत्यधिक बालों की वृद्धि?',
+        textEn: 'Have you noticed increased hair growth on your face — especially your chin, upper lip, or jawline — or on your chest or back?',
+        textTa: 'உங்கள் முகத்தில் — குறிப்பாக தாடை, மேல் உதடு, அல்லது தாடை எலும்பு பகுதியில் — அல்லது மார்பு அல்லது முதுகில் அதிக முடி வளர்ச்சியை கவனித்தீர்களா?',
+        textHi: 'क्या आपने अपने चेहरे पर — खासकर ठुड्डी, ऊपरी होंठ, या जॉलाइन पर — या अपनी छाती या पीठ पर बालों की बढ़ी हुई वृद्धि देखी है?',
         options: yesNoUnsure(14)
       },
       {

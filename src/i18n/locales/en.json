@@ -8,7 +8,8 @@
     "education": "Learn",
     "screenings": "Screenings",
     "about": "About & Privacy",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "nearbyCare": "Nearby Care"
   },
   "landing": {
     "heroHeadline": "Your Health Matters.",
@@ -57,7 +58,8 @@
     "listenHindi": "Listen in Hindi",
     "voiceFallbackTa": "Tamil voice not found on this device — playing in English instead.",
     "voiceFallbackHi": "Hindi voice not found on this device — playing in English instead.",
-    "voiceUnsupported": "Voice playback isn’t supported in this browser. Try Chrome, Safari, or Brave."
+    "voiceUnsupported": "Voice playback isn’t supported in this browser. Try Chrome, Safari, or Brave.",
+    "retry": "Retry"
   },
   "emergency": {
     "title": "This may require immediate medical attention.",
@@ -94,7 +96,6 @@
     "title": "Share your feedback",
     "subtitle": "Help us improve Kathaipoma — your feedback is anonymous.",
     "notConfigured": "The feedback backend isn't set up yet. See .env.example in the project for setup steps.",
-    "ratingLabel": "How helpful was Kathaipoma?",
     "aboutLabel": "What is this about?",
     "aboutGeneral": "General feedback",
     "messageLabel": "Your feedback",
@@ -107,5 +108,45 @@
   },
   "footer": {
     "disclaimer": "Kathaipoma provides awareness and preliminary screening only. It is not a substitute for diagnosis by a qualified doctor."
+  },
+  "installPrompt": {
+    "title": "Install Kathaipoma AI",
+    "subtitle": "Keep women's health awareness with you — anytime, anywhere. Works offline once installed.",
+    "cta": "Install Kathaipoma AI",
+    "dismiss": "Dismiss",
+    "compactMessage": "Install Kathaipoma for quick, offline access.",
+    "iosHint": "Add to Home Screen",
+    "iosInstructions": "Tap Share, then “Add to Home Screen” to install."
+  },
+  "nearbyCare": {
+    "title": "Nearby Care",
+    "chooseSubtitle": "Choose a health concern to find nearby healthcare facilities.",
+    "pcosCare": "PCOS / PCOD Care",
+    "breastCare": "Breast Cancer Care",
+    "locationTitle": "Find nearby hospitals",
+    "locationSubtitle": "Allow location access to find healthcare facilities near you.",
+    "allowLocation": "Allow Location",
+    "notNow": "Not Now",
+    "locating": "Locating...",
+    "locationDenied": "Location access was not granted.",
+    "locationUnavailable": "Location isn't available on this device or browser.",
+    "searching": "Searching nearby facilities...",
+    "searchError": "Something went wrong while searching. Please try again.",
+    "openInMaps": "Open in Google Maps",
+    "noResults": "No nearby facilities found. Try searching in Google Maps instead.",
+    "searchNotConfigured": "In-app hospital search isn't set up yet. Search directly in Google Maps instead.",
+    "disclaimer": "Kathaipoma does not verify that a listed facility treats a specific condition. Please confirm services directly with the facility.",
+    "directions": "Directions",
+    "call": "Call",
+    "typeGynecology": "Gynecology",
+    "typeObGyn": "Obstetrics & Gynecology",
+    "typeEndocrinology": "Endocrinology",
+    "typeOncology": "Oncology",
+    "typeHospital": "Hospital",
+    "homeTeaserTitle": "Find Healthcare Near You",
+    "homeTeaserSubtitle": "Discover nearby hospitals and clinics for PCOS/PCOD or breast health — works without completing a screening first.",
+    "resultsSectionTitle": "Healthcare Near You",
+    "resultsSubtitleBreast": "Find nearby healthcare facilities for breast health evaluation",
+    "resultsSubtitlePcos": "Find nearby healthcare facilities for PCOS / PCOD"
   }
 }

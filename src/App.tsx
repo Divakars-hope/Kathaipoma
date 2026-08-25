@@ -8,6 +8,7 @@ import Education from './pages/Education'
 import Screening from './pages/Screening'
 import Results from './pages/Results'
 import About from './pages/About'
+import NearbyCare from './pages/NearbyCare'
 
 export default function App() {
   return (
@@ -20,6 +21,8 @@ export default function App() {
           <Route path="/education" element={<Education />} />
           <Route path="/screening/:moduleId" element={<Screening />} />
           <Route path="/results/:moduleId" element={<Results />} />
+          <Route path="/nearby-care" element={<NearbyCare />} />
+          <Route path="/nearby-care/:concern" element={<NearbyCare />} />
           <Route path="/about" element={<About />} />
         </Routes>
       </main>

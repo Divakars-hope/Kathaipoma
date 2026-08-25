@@ -1,13 +1,21 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Download, RefreshCcw, ArrowLeft } from 'lucide-react'
+import { Download, RefreshCcw, ArrowLeft, MapPin } from 'lucide-react'
 import { MODULES, type ModuleId } from '../data/questions'
 import { scoreModule } from '../data/riskEngine'
 import { RECOMMENDATIONS, riskLevelSuggestsDoctorVisit } from '../data/recommendations'
 import RiskMeter from '../components/RiskMeter'
 import EmergencyWarning from '../components/EmergencyWarning'
-import ResultsFeedback from '../components/ResultsFeedback'
+import InstallPrompt from '../components/InstallPrompt'
 import { currentAppLanguage, pickLang } from '../utils/localize'
+import type { HealthConcern } from '../utils/nearbyHospitals'
+
+/** Only breast-cancer and pcos currently map to a Nearby Care concern — menopause has no dedicated facility category requested for this feature. */
+const NEARBY_CARE_CONCERN: Partial<Record<ModuleId, HealthConcern>> = {
+  'breast-cancer': 'breast',
+  pcos: 'pcos'
+}
 
 export default function Results() {
   const { moduleId } = useParams<{ moduleId: ModuleId }>()
@@ -146,7 +154,24 @@ export default function Results() {
         </button>
       </div>
 
-      <ResultsFeedback moduleId={mod.id} />
+      {NEARBY_CARE_CONCERN[mod.id] && (
+        <Link
+          to={`/nearby-care/${NEARBY_CARE_CONCERN[mod.id]}`}
+          className="glass-card flex items-center gap-4 p-5 mt-6 hover:-translate-y-0.5 transition-transform"
+        >
+          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blossom-300 to-blossom-500 text-white flex items-center justify-center shrink-0">
+            <MapPin size={18} aria-hidden="true" />
+          </div>
+          <div>
+            <h3 className="font-display font-semibold text-ink-900 text-sm">{t('nearbyCare.resultsSectionTitle')}</h3>
+            <p className="text-xs font-body text-ink-700/70 mt-0.5">
+              {mod.id === 'breast-cancer' ? t('nearbyCare.resultsSubtitleBreast') : t('nearbyCare.resultsSubtitlePcos')}
+            </p>
+          </div>
+        </Link>
+      )}
+
+      <InstallPrompt variant="compact" className="mt-6" />
     </div>
   )
 }

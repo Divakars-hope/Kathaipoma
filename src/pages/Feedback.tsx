@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Star, Send, CheckCircle2, AlertTriangle } from 'lucide-react'
+import { Send, CheckCircle2, AlertTriangle } from 'lucide-react'
 import { MODULE_LIST, MODULES } from '../data/questions'
 import { submitFeedback, feedbackBackendConfigured } from '../utils/feedbackService'
 
@@ -11,7 +11,6 @@ export default function Feedback() {
   const { t, i18n } = useTranslation()
   const isTa = i18n.language === 'ta'
 
-  const [rating, setRating] = useState(0)
   const [message, setMessage] = useState('')
   const [moduleContext, setModuleContext] = useState('general')
   const [status, setStatus] = useState<Status>('idle')
@@ -21,19 +20,17 @@ export default function Feedback() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!message.trim() || rating === 0) return
+    if (!message.trim()) return
     setStatus('sending')
     setErrorMsg('')
     try {
       await submitFeedback({
         message: message.trim(),
-        rating,
         moduleContext,
         language: isTa ? 'ta' : 'en'
       })
       setStatus('sent')
       setMessage('')
-      setRating(0)
     } catch (err) {
       setStatus('error')
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong.')
@@ -70,30 +67,6 @@ export default function Feedback() {
         </motion.div>
       ) : (
         <form onSubmit={handleSubmit} className="glass-card p-7 space-y-6">
-          <div>
-            <label className="font-display font-semibold text-ink-900 text-sm block mb-2">
-              {t('feedback.ratingLabel')}
-            </label>
-            <div className="flex gap-2" role="radiogroup" aria-label={t('feedback.ratingLabel')}>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  role="radio"
-                  aria-checked={rating === n}
-                  aria-label={`${n} star`}
-                  onClick={() => setRating(n)}
-                  className="p-1"
-                >
-                  <Star
-                    size={28}
-                    className={rating >= n ? 'fill-blossom-400 text-blossom-400' : 'text-ink-900/20'}
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div>
             <label htmlFor="moduleContext" className="font-display font-semibold text-ink-900 text-sm block mb-2">
               {t('feedback.aboutLabel')}
@@ -139,7 +112,7 @@ export default function Feedback() {
 
           <button
             type="submit"
-            disabled={!message.trim() || rating === 0 || status === 'sending'}
+            disabled={!message.trim() || status === 'sending'}
             className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <Send size={16} aria-hidden="true" />

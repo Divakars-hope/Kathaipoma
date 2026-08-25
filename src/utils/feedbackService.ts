@@ -13,7 +13,6 @@
 
 export interface FeedbackPayload {
   message: string
-  rating: number // 1–5
   moduleContext?: string // e.g. 'breast-cancer', 'pcos', 'menopause', or 'general'
   language: 'en' | 'ta'
 }
@@ -66,7 +65,6 @@ export async function submitFeedback(payload: FeedbackPayload): Promise<void> {
   const { collection, addDoc, serverTimestamp } = await import('firebase/firestore')
   await addDoc(collection(db, 'feedback'), {
     message: payload.message.slice(0, 2000),
-    rating: payload.rating,
     moduleContext: payload.moduleContext ?? 'general',
     language: payload.language,
     createdAt: serverTimestamp()

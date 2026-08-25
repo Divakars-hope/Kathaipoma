@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { ShieldCheck, HeartPulse, Sparkles } from 'lucide-react'
+import { ShieldCheck, HeartPulse, Sparkles, MapPin } from 'lucide-react'
 import { MODULE_LIST, MODULES } from '../data/questions'
+import InstallPrompt from '../components/InstallPrompt'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -101,6 +102,27 @@ export default function Landing() {
             )
           })}
         </div>
+      </section>
+
+      {/* Nearby Care teaser */}
+      <section className="pb-16">
+        <Link
+          to="/nearby-care"
+          className="glass-card flex flex-col sm:flex-row items-center gap-5 p-6 md:p-7 hover:-translate-y-1 transition-transform max-w-4xl mx-auto"
+        >
+          <div className="h-11 w-11 rounded-full bg-gradient-to-br from-blossom-300 to-blossom-500 text-white flex items-center justify-center shrink-0">
+            <MapPin size={20} aria-hidden="true" />
+          </div>
+          <div className="text-center sm:text-left">
+            <h3 className="font-display font-semibold text-lg text-ink-900 mb-1">{t('nearbyCare.homeTeaserTitle')}</h3>
+            <p className="text-sm font-body text-ink-700/75">{t('nearbyCare.homeTeaserSubtitle')}</p>
+          </div>
+        </Link>
+      </section>
+
+      {/* Install promotion */}
+      <section className="pb-24 max-w-4xl mx-auto">
+        <InstallPrompt variant="card" />
       </section>
     </div>
   )

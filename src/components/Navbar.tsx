@@ -15,6 +15,7 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-6 font-body text-sm text-ink-700">
           <Link to="/" className="hover:text-blossom-500 transition-colors">{t('nav.home')}</Link>
           <Link to="/education" className="hover:text-blossom-500 transition-colors">{t('nav.education')}</Link>
+          <Link to="/nearby-care" className="hover:text-blossom-500 transition-colors">{t('nav.nearbyCare')}</Link>
           <Link to="/about" className="hover:text-blossom-500 transition-colors">{t('nav.about')}</Link>
         </nav>
         <LanguageToggle />
