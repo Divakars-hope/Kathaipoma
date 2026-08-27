@@ -64,10 +64,13 @@ export function hospitalSearchEnhancedConfigured(): boolean {
 
 /**
  * Always works, no key required. This is the fallback tier's entire
- * implementation — a plain Google Maps search URL.
+ * implementation — a plain Google Maps search URL. `area` (a manually
+ * typed city/town/PIN code) is appended to the query text when there's
+ * no granted coordinate to center the search on instead.
  */
-export function buildMapsSearchUrl(query: string, coords?: Coordinates): string {
-  const q = encodeURIComponent(query)
+export function buildMapsSearchUrl(query: string, coords?: Coordinates, area?: string): string {
+  const fullQuery = area && area.trim() ? `${query} near ${area.trim()}` : query
+  const q = encodeURIComponent(fullQuery)
   if (coords) {
     return `https://www.google.com/maps/search/${q}/@${coords.lat},${coords.lng},14z`
   }
@@ -89,14 +92,33 @@ interface PlacesTextSearchResponse {
  * Tier 2 only — throws if not configured, so callers must check
  * hospitalSearchEnhancedConfigured() first and fall back to
  * buildMapsSearchUrl() otherwise (see NearbyCare.tsx).
+ *
+ * Accepts EITHER granted coordinates (locationBias, tighter/more
+ * relevant results) OR a manually typed area string folded directly
+ * into the free-text query (Places API Text Search fully supports
+ * natural-language location phrases like "gynecology clinic near
+ * Coimbatore" without needing a separate geocoding call) — never both
+ * required, since a person who denies location but types their town
+ * should still get real in-app results when the enhanced tier is
+ * configured, not just be dropped to the fallback link.
  */
 export async function searchNearbyHospitals(
   concern: HealthConcern,
-  coords: Coordinates
+  location: { coords: Coordinates } | { area: string }
 ): Promise<HealthcareFacility[]> {
   const apiKey = import.meta.env.VITE_GOOGLE_PLACES_API_KEY
   if (!apiKey) {
     throw new Error('Nearby hospital search is not configured — VITE_GOOGLE_PLACES_API_KEY is unset.')
+  }
+
+  const hasCoords = 'coords' in location
+  const textQuery = hasCoords ? CONCERN_QUERY[concern] : `${CONCERN_QUERY[concern]} near ${location.area}`
+
+  const body: Record<string, unknown> = { textQuery, maxResultCount: 10 }
+  if (hasCoords) {
+    body.locationBias = {
+      circle: { center: { latitude: location.coords.lat, longitude: location.coords.lng }, radius: 15000 }
+    }
   }
 
   const res = await fetch('https://places.googleapis.com/v1/places:searchText', {
@@ -107,13 +129,7 @@ export async function searchNearbyHospitals(
       'X-Goog-FieldMask':
         'places.id,places.displayName,places.formattedAddress,places.internationalPhoneNumber,places.googleMapsUri,places.types'
     },
-    body: JSON.stringify({
-      textQuery: CONCERN_QUERY[concern],
-      locationBias: {
-        circle: { center: { latitude: coords.lat, longitude: coords.lng }, radius: 15000 }
-      },
-      maxResultCount: 10
-    })
+    body: JSON.stringify(body)
   })
 
   if (!res.ok) {
@@ -121,7 +137,9 @@ export async function searchNearbyHospitals(
   }
 
   const data = (await res.json()) as PlacesTextSearchResponse
-  const fallbackUrl = buildMapsSearchUrl(CONCERN_QUERY[concern], coords)
+  const fallbackUrl = hasCoords
+    ? buildMapsSearchUrl(CONCERN_QUERY[concern], location.coords)
+    : buildMapsSearchUrl(CONCERN_QUERY[concern], undefined, location.area)
 
   return (data.places ?? []).map((p) => ({
     id: p.id,

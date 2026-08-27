@@ -9,7 +9,9 @@
     "screenings": "जांच",
     "about": "हमारे बारे में और गोपनीयता",
     "feedback": "प्रतिक्रिया",
-    "nearbyCare": "नज़दीकी सेवा"
+    "nearbyCare": "नज़दीकी सेवा",
+    "openMenu": "मेनू खोलें",
+    "closeMenu": "मेनू बंद करें"
   },
   "landing": {
     "heroHeadline": "आपका स्वास्थ्य मायने रखता है।",
@@ -147,6 +149,12 @@
     "homeTeaserSubtitle": "PCOS/PCOD या स्तन स्वास्थ्य के लिए नज़दीकी अस्पताल और क्लीनिक खोजें — स्क्रीनिंग पूरी किए बिना भी उपयोग कर सकते हैं।",
     "resultsSectionTitle": "आपके आस-पास स्वास्थ्य सेवा",
     "resultsSubtitleBreast": "स्तन स्वास्थ्य मूल्यांकन के लिए नज़दीकी स्वास्थ्य सुविधाएं खोजें",
-    "resultsSubtitlePcos": "PCOS / PCOD के लिए नज़दीकी स्वास्थ्य सुविधाएं खोजें"
+    "resultsSubtitlePcos": "PCOS / PCOD के लिए नज़दीकी स्वास्थ्य सुविधाएं खोजें",
+    "locationTimeout": "इसमें बहुत समय लग गया — आपके डिवाइस में कमज़ोर GPS या नेटवर्क सिग्नल हो सकता है।",
+    "locationUnknownError": "अभी आपका स्थान प्राप्त नहीं हो सका।",
+    "orDivider": "या",
+    "manualSearchLabel": "शहर, कस्बे, या पिन कोड से खोजें",
+    "manualSearchPlaceholder": "अपना शहर, कस्बा, या पिन कोड दर्ज करें",
+    "manualSearchSubmit": "खोजें"
   }
 }

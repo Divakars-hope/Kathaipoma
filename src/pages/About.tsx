@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { ShieldCheck, EyeOff, Ban } from 'lucide-react'
+import BackButton from '../components/BackButton'
 
 export default function About() {
   const { t } = useTranslation()
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-14">
+      <BackButton className="mb-6" />
+
       <h1 className="font-display font-bold text-2xl text-ink-900 mb-8 text-center">
         {t('about.title')}
       </h1>

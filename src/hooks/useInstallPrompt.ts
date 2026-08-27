@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 
-const DISMISS_KEY = 'kathaipoma_install_dismissed_v1'
+const DISMISS_KEY = 'kathaipoma_install_dismissed_at'
+// A closed prompt comes back after this long — closing it once shouldn't
+// mean "never offer this again." Chrome's own re-prompt guidance for
+// beforeinstallprompt suggests a cooldown in this general range rather
+// than a permanent suppression.
+const DISMISS_COOLDOWN_MS = 14 * 24 * 60 * 60 * 1000 // 14 days
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>
@@ -25,10 +30,27 @@ function isIOSSafari(): boolean {
   return isIOS && isSafari
 }
 
+function recentlyDismissed(): boolean {
+  try {
+    const raw = localStorage.getItem(DISMISS_KEY)
+    if (!raw) return false
+    const dismissedAt = Number(raw)
+    if (Number.isNaN(dismissedAt)) return false
+    return Date.now() - dismissedAt < DISMISS_COOLDOWN_MS
+  } catch {
+    return false
+  }
+}
+
 /**
  * Centralizes install-prompt state so the home-page card and the compact
  * results-page CTA share one source of truth (and one dismissal record,
  * so dismissing either stops both from nagging — see the component doc).
+ *
+ * BUG FIX: closing the prompt used to write a permanent flag, so one
+ * accidental tap of the × hid install promotion forever with no way back
+ * short of clearing site data. Fixed to a 14-day cooldown instead — the
+ * × still means "not now," it just doesn't mean "never."
  *
  * Chromium-based browsers (Chrome, Edge, most Android browsers) fire
  * `beforeinstallprompt` when the app is genuinely installable; we capture
@@ -47,12 +69,7 @@ export function useInstallPrompt() {
   const [dismissed, setDismissed] = useState(false)
 
   useEffect(() => {
-    try {
-      setDismissed(localStorage.getItem(DISMISS_KEY) === '1')
-    } catch {
-      // localStorage unavailable — treat as not dismissed, worst case the
-      // prompt shows once more than ideal, never a crash.
-    }
+    setDismissed(recentlyDismissed())
 
     const onBeforeInstall = (e: Event) => {
       e.preventDefault()
@@ -81,7 +98,7 @@ export function useInstallPrompt() {
   const dismiss = useCallback(() => {
     setDismissed(true)
     try {
-      localStorage.setItem(DISMISS_KEY, '1')
+      localStorage.setItem(DISMISS_KEY, String(Date.now()))
     } catch {
       // best-effort only
     }

@@ -9,7 +9,9 @@
     "screenings": "Screenings",
     "about": "About & Privacy",
     "feedback": "Feedback",
-    "nearbyCare": "Nearby Care"
+    "nearbyCare": "Nearby Care",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "landing": {
     "heroHeadline": "Your Health Matters.",
@@ -147,6 +149,12 @@
     "homeTeaserSubtitle": "Discover nearby hospitals and clinics for PCOS/PCOD or breast health — works without completing a screening first.",
     "resultsSectionTitle": "Healthcare Near You",
     "resultsSubtitleBreast": "Find nearby healthcare facilities for breast health evaluation",
-    "resultsSubtitlePcos": "Find nearby healthcare facilities for PCOS / PCOD"
+    "resultsSubtitlePcos": "Find nearby healthcare facilities for PCOS / PCOD",
+    "locationTimeout": "That took too long — your device may have a weak GPS or network signal.",
+    "locationUnknownError": "We couldn't get your location right now.",
+    "orDivider": "or",
+    "manualSearchLabel": "Search by city, town, or PIN code",
+    "manualSearchPlaceholder": "Enter your city, town, or PIN code",
+    "manualSearchSubmit": "Search"
   }
 }

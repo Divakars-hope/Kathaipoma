@@ -1,13 +1,14 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Download, RefreshCcw, ArrowLeft, MapPin } from 'lucide-react'
+import { Download, RefreshCcw, MapPin } from 'lucide-react'
 import { MODULES, type ModuleId } from '../data/questions'
 import { scoreModule } from '../data/riskEngine'
 import { RECOMMENDATIONS, riskLevelSuggestsDoctorVisit } from '../data/recommendations'
 import RiskMeter from '../components/RiskMeter'
 import EmergencyWarning from '../components/EmergencyWarning'
 import InstallPrompt from '../components/InstallPrompt'
+import BackButton from '../components/BackButton'
 import { currentAppLanguage, pickLang } from '../utils/localize'
 import type { HealthConcern } from '../utils/nearbyHospitals'
 
@@ -90,12 +91,7 @@ export default function Results() {
 
   return (
     <div className="max-w-xl mx-auto px-6 py-10">
-      <button
-        onClick={() => navigate('/')}
-        className="flex items-center gap-1 text-sm font-friendly text-ink-700/70 hover:text-blossom-500 mb-6"
-      >
-        <ArrowLeft size={16} aria-hidden="true" /> {t('common.backHome')}
-      </button>
+      <BackButton className="mb-6" />
 
       <h1 className="font-display font-bold text-2xl text-ink-900 mb-1">{t('results.title')}</h1>
       <p className="text-sm font-body text-ink-700/70 mb-6">{pickLang(lang, mod.titleEn, mod.titleTa, mod.titleHi)}</p>

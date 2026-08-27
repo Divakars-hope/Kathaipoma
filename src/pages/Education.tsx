@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import SpeakButton from '../components/SpeakButton'
+import BackButton from '../components/BackButton'
 import { MODULE_LIST, MODULES } from '../data/questions'
 import type { ModuleId } from '../data/questions'
 import { currentAppLanguage, pickLang } from '../utils/localize'
@@ -137,6 +138,8 @@ export default function Education() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
+      <BackButton className="mb-6" />
+
       <h1 className="font-display font-bold text-2xl text-ink-900 mb-8 text-center">
         {t('education.title')}
       </h1>

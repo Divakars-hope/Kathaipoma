@@ -14,7 +14,7 @@
 export interface FeedbackPayload {
   message: string
   moduleContext?: string // e.g. 'breast-cancer', 'pcos', 'menopause', or 'general'
-  language: 'en' | 'ta'
+  language: 'en' | 'ta' | 'hi'
 }
 
 function isFirebaseConfigured() {

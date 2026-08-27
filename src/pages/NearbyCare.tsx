@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { ArrowLeft, ExternalLink, RefreshCcw, Stethoscope, Ribbon } from 'lucide-react'
+import { ExternalLink, RefreshCcw, Stethoscope, Ribbon } from 'lucide-react'
 import LocationPermission from '../components/LocationPermission'
 import HospitalCard from '../components/HospitalCard'
+import BackButton from '../components/BackButton'
 import {
   buildMapsSearchUrl,
   concernSearchQuery,
@@ -20,7 +21,6 @@ type Stage = 'chooseConcern' | 'location' | 'loading' | 'results' | 'error'
 export default function NearbyCare() {
   const { concern: concernParam } = useParams<{ concern?: string }>()
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
   const initialConcern: HealthConcern | null =
     concernParam === 'pcos' || concernParam === 'breast' ? concernParam : null
@@ -28,6 +28,7 @@ export default function NearbyCare() {
   const [concern, setConcern] = useState<HealthConcern | null>(initialConcern)
   const [stage, setStage] = useState<Stage>(initialConcern ? 'location' : 'chooseConcern')
   const [coords, setCoords] = useState<Coordinates | undefined>(undefined)
+  const [manualArea, setManualArea] = useState<string | undefined>(undefined)
   const [facilities, setFacilities] = useState<HealthcareFacility[] | null>(null)
 
   const enhanced = hospitalSearchEnhancedConfigured()
@@ -37,9 +38,10 @@ export default function NearbyCare() {
     setStage('location')
   }
 
-  const runSearch = async (loc?: Coordinates) => {
+  const runSearch = async (loc?: Coordinates, area?: string) => {
     if (!concern) return
     setCoords(loc)
+    setManualArea(area)
     if (!enhanced) {
       // Fallback tier: no API key configured, so there's nothing to fetch —
       // the "results" stage just shows the Maps-search link, built below.
@@ -47,9 +49,15 @@ export default function NearbyCare() {
       setFacilities(null)
       return
     }
+    if (!loc && !area) {
+      // Neither GPS nor a manually typed area — nothing to search with.
+      setStage('results')
+      setFacilities(null)
+      return
+    }
     setStage('loading')
     try {
-      const results = loc ? await searchNearbyHospitals(concern, loc) : []
+      const results = await searchNearbyHospitals(concern, loc ? { coords: loc } : { area: area! })
       setFacilities(results)
       setStage('results')
     } catch {
@@ -65,6 +73,8 @@ export default function NearbyCare() {
   if (!concern || stage === 'chooseConcern') {
     return (
       <div className="max-w-2xl mx-auto px-6 py-12">
+        <BackButton className="mb-6" fallback="/" />
+
         <h1 className="font-display font-bold text-2xl text-ink-900 text-center mb-2">
           {t('nearbyCare.title')}
         </h1>
@@ -85,19 +95,34 @@ export default function NearbyCare() {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
-      <button
-        onClick={() => navigate('/nearby-care')}
-        className="flex items-center gap-1 text-sm font-friendly text-ink-700/70 hover:text-blossom-500 mb-6"
-      >
-        <ArrowLeft size={16} aria-hidden="true" /> {t('common.back')}
-      </button>
+      <BackButton
+        className="mb-6"
+        // If we arrived with a concern already in the URL (e.g. a direct
+        // link from Results), a real route exists to go back to — use
+        // normal history navigation. If the concern was chosen from the
+        // in-page picker instead (no route change happened), "back" means
+        // returning to that picker, not navigating anywhere.
+        onClick={
+          initialConcern
+            ? undefined
+            : () => {
+                setConcern(null)
+                setStage('chooseConcern')
+              }
+        }
+        fallback="/nearby-care"
+      />
 
       <h1 className="font-display font-bold text-xl text-ink-900 mb-8">
         {concern === 'pcos' ? t('nearbyCare.pcosCare') : t('nearbyCare.breastCare')}
       </h1>
 
       {stage === 'location' && (
-        <LocationPermission onGranted={(c) => runSearch(c)} onSkip={() => runSearch(undefined)} />
+        <LocationPermission
+          onGranted={(c) => runSearch(c)}
+          onSkip={() => runSearch(undefined)}
+          onManualSearch={(area) => runSearch(undefined, area)}
+        />
       )}
 
       {stage === 'loading' && (
@@ -108,11 +133,11 @@ export default function NearbyCare() {
         <div className="glass-card p-6 text-center max-w-md mx-auto">
           <p className="text-sm font-friendly text-red-600 mb-4">{t('nearbyCare.searchError')}</p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <button onClick={() => runSearch(coords)} className="btn-secondary">
+            <button onClick={() => runSearch(coords, manualArea)} className="btn-secondary">
               <RefreshCcw size={14} aria-hidden="true" /> {t('common.retry')}
             </button>
             <a
-              href={buildMapsSearchUrl(concernSearchQuery(concern), coords)}
+              href={buildMapsSearchUrl(concernSearchQuery(concern), coords, manualArea)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -137,7 +162,7 @@ export default function NearbyCare() {
             <div className="glass-card p-6 text-center max-w-md mx-auto">
               <p className="text-sm font-friendly text-ink-700/70 mb-4">{t('nearbyCare.noResults')}</p>
               <a
-                href={buildMapsSearchUrl(concernSearchQuery(concern), coords)}
+                href={buildMapsSearchUrl(concernSearchQuery(concern), coords, manualArea)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
@@ -151,7 +176,7 @@ export default function NearbyCare() {
             <div className="glass-card p-6 text-center max-w-md mx-auto">
               <p className="text-sm font-body text-ink-700/70 mb-4">{t('nearbyCare.searchNotConfigured')}</p>
               <a
-                href={buildMapsSearchUrl(concernSearchQuery(concern), coords)}
+                href={buildMapsSearchUrl(concernSearchQuery(concern), coords, manualArea)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"

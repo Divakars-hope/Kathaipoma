@@ -4,12 +4,14 @@ import { motion } from 'framer-motion'
 import { Send, CheckCircle2, AlertTriangle } from 'lucide-react'
 import { MODULE_LIST, MODULES } from '../data/questions'
 import { submitFeedback, feedbackBackendConfigured } from '../utils/feedbackService'
+import BackButton from '../components/BackButton'
+import { currentAppLanguage, pickLang } from '../utils/localize'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 export default function Feedback() {
   const { t, i18n } = useTranslation()
-  const isTa = i18n.language === 'ta'
+  const lang = currentAppLanguage(i18n.language)
 
   const [message, setMessage] = useState('')
   const [moduleContext, setModuleContext] = useState('general')
@@ -27,7 +29,7 @@ export default function Feedback() {
       await submitFeedback({
         message: message.trim(),
         moduleContext,
-        language: isTa ? 'ta' : 'en'
+        language: lang
       })
       setStatus('sent')
       setMessage('')
@@ -39,6 +41,8 @@ export default function Feedback() {
 
   return (
     <div className="max-w-xl mx-auto px-6 py-10">
+      <BackButton className="mb-6" />
+
       <h1 className="font-display font-bold text-2xl text-ink-900 mb-2 text-center">
         {t('feedback.title')}
       </h1>
@@ -80,7 +84,7 @@ export default function Feedback() {
               <option value="general">{t('feedback.aboutGeneral')}</option>
               {MODULE_LIST.map((id) => (
                 <option key={id} value={id}>
-                  {isTa ? MODULES[id].titleTa : MODULES[id].titleEn}
+                  {pickLang(lang, MODULES[id].titleEn, MODULES[id].titleTa, MODULES[id].titleHi)}
                 </option>
               ))}
             </select>

@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft } from 'lucide-react'
 import { MODULES, type ModuleId } from '../data/questions'
 import ConsentGate from '../components/ConsentGate'
 import SpeakButton from '../components/SpeakButton'
+import BackButton from '../components/BackButton'
 import { currentAppLanguage, pickLang } from '../utils/localize'
 
 export default function Screening() {
@@ -36,6 +36,7 @@ export default function Screening() {
   if (!consented) {
     return (
       <div className="px-6">
+        <BackButton className="max-w-lg mx-auto pt-6" fallback="/" />
         <ConsentGate onAgree={() => setConsented(true)} />
       </div>
     )
@@ -67,12 +68,7 @@ export default function Screening() {
 
   return (
     <div className="max-w-xl mx-auto px-6 py-10">
-      <button
-        onClick={goBack}
-        className="flex items-center gap-1 text-sm font-friendly text-ink-700/70 hover:text-blossom-500 mb-6"
-      >
-        <ChevronLeft size={16} aria-hidden="true" /> {t('common.back')}
-      </button>
+      <BackButton onClick={goBack} className="mb-6" />
 
       <h1 className="font-display font-semibold text-xl text-ink-900 mb-1">
         {pickLang(lang, mod.titleEn, mod.titleTa, mod.titleHi)}
