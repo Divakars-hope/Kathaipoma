@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'robots.txt', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: "Kathaipoma — Women's Health AI",
-        short_name: 'Kathaipoma',
+        name: "AUREVA — Women's Health AI",
+        short_name: 'AUREVA',
         description:
           "Private, anonymous women's health awareness and preliminary screening companion. No login required.",
         theme_color: '#F8BBD9',

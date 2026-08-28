@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Kathaipoma</string>
-    <string name="title_activity_main">Kathaipoma</string>
-    <string name="package_name">com.kathaipoma.app</string>
-    <string name="custom_url_scheme">com.kathaipoma.app</string>
+    <string name="app_name">AUREVA</string>
+    <string name="title_activity_main">AUREVA</string>
+    <string name="package_name">com.aureva.app</string>
+    <string name="custom_url_scheme">com.aureva.app</string>
 </resources>

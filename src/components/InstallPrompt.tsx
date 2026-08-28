@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Download, Share, X, Sparkles } from 'lucide-react'
+import { Download, Share, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInstallPrompt } from '../hooks/useInstallPrompt'
 
@@ -11,13 +11,16 @@ interface InstallPromptProps {
 /**
  * Renders nothing at all unless the browser genuinely supports install
  * (canInstall) or this is iOS Safari, where installing is possible but
- * only via manual "Add to Home Screen" guidance. Both branches are
- * dismissible and share one dismissal record via useInstallPrompt, so
- * dismissing the home-page card also quiets the compact results-page CTA.
+ * only via manual "Add to Home Screen" guidance.
+ *
+ * By explicit product decision this has no close/× control — it's
+ * permanent for as long as the platform reports the app as installable,
+ * and disappears on its own only once the app is actually installed
+ * (useInstallPrompt detects standalone display mode).
  */
 export default function InstallPrompt({ variant = 'card', className = '' }: InstallPromptProps) {
   const { t } = useTranslation()
-  const { canInstall, showIOSGuidance, shouldRender, promptInstall, dismiss } = useInstallPrompt()
+  const { canInstall, showIOSGuidance, shouldRender, promptInstall } = useInstallPrompt()
 
   if (!shouldRender) return null
 
@@ -44,13 +47,6 @@ export default function InstallPrompt({ variant = 'card', className = '' }: Inst
             ) : (
               <span className="text-xs font-friendly text-blossom-600">{t('installPrompt.iosHint')}</span>
             )}
-            <button
-              onClick={dismiss}
-              aria-label={t('installPrompt.dismiss')}
-              className="text-ink-700/40 hover:text-ink-700/70 p-1"
-            >
-              <X size={16} aria-hidden="true" />
-            </button>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -65,14 +61,6 @@ export default function InstallPrompt({ variant = 'card', className = '' }: Inst
         exit={{ opacity: 0 }}
         className={`relative glass-card p-6 md:p-7 overflow-hidden ${className}`}
       >
-        <button
-          onClick={dismiss}
-          aria-label={t('installPrompt.dismiss')}
-          className="absolute top-4 right-4 text-ink-700/40 hover:text-ink-700/70 p-1"
-        >
-          <X size={18} aria-hidden="true" />
-        </button>
-
         <div className="h-11 w-11 rounded-full bg-gradient-to-br from-blossom-300 to-blossom-500 text-white flex items-center justify-center mb-4">
           <Download size={20} aria-hidden="true" />
         </div>

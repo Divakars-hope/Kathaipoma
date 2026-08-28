@@ -19,10 +19,10 @@ export default function Navbar() {
 
   return (
     <header className="relative z-20">
-      <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-display font-bold text-xl text-blossom-500">
-          <img src="/icons/apple-touch-icon.png" alt="Kathaipoma logo" className="h-9 w-9 rounded-full" />
-          <span>{t('app.name')}</span>
+      <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between gap-3">
+        <Link to="/" className="flex items-center gap-2 font-display font-bold text-xl text-blossom-500 min-w-0 shrink">
+          <img src="/icons/apple-touch-icon.png" alt="AUREVA logo" className="h-9 w-9 rounded-full shrink-0" />
+          <span className="truncate">{t('app.name')}</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 font-body text-sm text-ink-700">

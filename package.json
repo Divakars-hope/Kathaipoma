@@ -1,9 +1,9 @@
 {
-  "name": "kathaipoma-womens-health-ai",
+  "name": "aureva-womens-health-ai",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Kathaipoma — a private, anonymous women's health awareness and preliminary screening PWA (English / Tamil).",
+  "description": "AUREVA — a private, anonymous women's health awareness and preliminary screening PWA (English / Tamil).",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

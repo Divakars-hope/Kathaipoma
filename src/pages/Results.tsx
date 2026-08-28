@@ -59,7 +59,7 @@ export default function Results() {
     const title = pickLang(lang, mod.titleEn, mod.titleTa, mod.titleHi)
     let y = 20
     doc.setFontSize(16)
-    doc.text('Kathaipoma - ' + title, 14, y)
+    doc.text('AUREVA - ' + title, 14, y)
     y += 10
     doc.setFontSize(11)
     doc.text(`Health awareness score: ${result.healthScore}/100`, 14, y)
@@ -80,13 +80,13 @@ export default function Results() {
     doc.setTextColor(150)
     doc.text(
       doc.splitTextToSize(
-        'Kathaipoma is an awareness and preliminary screening tool, not a medical diagnosis. Please consult a qualified doctor.',
+        'AUREVA is an awareness and preliminary screening tool, not a medical diagnosis. Please consult a qualified doctor.',
         180
       ),
       14,
       y
     )
-    doc.save(`kathaipoma-${mod.id}-results.pdf`)
+    doc.save(`aureva-${mod.id}-results.pdf`)
   }
 
   return (

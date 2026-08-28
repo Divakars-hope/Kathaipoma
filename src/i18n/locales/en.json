@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Kathaipoma",
+    "name": "AUREVA",
     "tagline": "Your Health Matters."
   },
   "nav": {
@@ -28,8 +28,8 @@
     "menopauseDesc": "Understand what stage you may be in and what to expect."
   },
   "assistant": {
-    "name": "Kathaipoma AI",
-    "greeting": "Hello, I'm Kathaipoma AI. I'm here to explain every question in simple words. You can also listen instead of reading.",
+    "name": "AUREVA AI",
+    "greeting": "Hello, I'm AUREVA AI. I'm here to explain every question in simple words. You can also listen instead of reading.",
     "close": "Close assistant"
   },
   "consent": {
@@ -37,7 +37,7 @@
     "point1": "We never ask your name.",
     "point2": "We never ask your phone number.",
     "point3": "We never store your personal identity.",
-    "note": "Your anonymous answers may be used only to improve Kathaipoma AI.",
+    "note": "Your anonymous answers may be used only to improve AUREVA AI.",
     "checkbox": "I understand and I agree to continue anonymously.",
     "continue": "Continue"
   },
@@ -80,7 +80,7 @@
     "diet": "Diet",
     "exercise": "Exercise",
     "seeDoctor": "Please consult a qualified doctor for a proper diagnosis.",
-    "disclaimer": "Kathaipoma is an awareness and preliminary screening tool, not a medical diagnosis."
+    "disclaimer": "AUREVA is an awareness and preliminary screening tool, not a medical diagnosis."
   },
   "education": {
     "title": "Learn about women's health",
@@ -90,13 +90,13 @@
   },
   "about": {
     "title": "About & Privacy",
-    "body1": "Kathaipoma is an anonymous women's health awareness and preliminary screening companion. It is not a hospital, and it does not diagnose disease.",
-    "body2": "No login, no account, no password. We do not collect your name, phone number, or identity. Anonymous answers may be used only to improve Kathaipoma AI.",
+    "body1": "AUREVA is an anonymous women's health awareness and preliminary screening companion. It is not a hospital, and it does not diagnose disease.",
+    "body2": "No login, no account, no password. We do not collect your name, phone number, or identity. Anonymous answers may be used only to improve AUREVA AI.",
     "body3": "No tracking cookies, no advertisements, no selling of data."
   },
   "feedback": {
     "title": "Share your feedback",
-    "subtitle": "Help us improve Kathaipoma — your feedback is anonymous.",
+    "subtitle": "Help us improve AUREVA — your feedback is anonymous.",
     "notConfigured": "The feedback backend isn't set up yet. See .env.example in the project for setup steps.",
     "aboutLabel": "What is this about?",
     "aboutGeneral": "General feedback",
@@ -105,18 +105,17 @@
     "anonymousNote": "This feedback is sent anonymously. We do not collect your name, phone number, or identity.",
     "submit": "Send feedback",
     "sending": "Sending...",
-    "thanks": "Thank you — your feedback helps us improve Kathaipoma.",
+    "thanks": "Thank you — your feedback helps us improve AUREVA.",
     "sendAnother": "Send another"
   },
   "footer": {
-    "disclaimer": "Kathaipoma provides awareness and preliminary screening only. It is not a substitute for diagnosis by a qualified doctor."
+    "disclaimer": "AUREVA provides awareness and preliminary screening only. It is not a substitute for diagnosis by a qualified doctor."
   },
   "installPrompt": {
-    "title": "Install Kathaipoma AI",
+    "title": "Install AUREVA AI",
     "subtitle": "Keep women's health awareness with you — anytime, anywhere. Works offline once installed.",
-    "cta": "Install Kathaipoma AI",
-    "dismiss": "Dismiss",
-    "compactMessage": "Install Kathaipoma for quick, offline access.",
+    "cta": "Install AUREVA AI",
+    "compactMessage": "Install AUREVA for quick, offline access.",
     "iosHint": "Add to Home Screen",
     "iosInstructions": "Tap Share, then “Add to Home Screen” to install."
   },
@@ -137,7 +136,7 @@
     "openInMaps": "Open in Google Maps",
     "noResults": "No nearby facilities found. Try searching in Google Maps instead.",
     "searchNotConfigured": "In-app hospital search isn't set up yet. Search directly in Google Maps instead.",
-    "disclaimer": "Kathaipoma does not verify that a listed facility treats a specific condition. Please confirm services directly with the facility.",
+    "disclaimer": "AUREVA does not verify that a listed facility treats a specific condition. Please confirm services directly with the facility.",
     "directions": "Directions",
     "call": "Call",
     "typeGynecology": "Gynecology",

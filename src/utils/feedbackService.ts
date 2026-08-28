@@ -8,7 +8,7 @@
  * error that the Feedback page displays instead of crashing.
  *
  * No name, email, or account is collected or required — consistent with
- * the rest of Kathaipoma's no-login, anonymous-by-default design.
+ * the rest of AUREVA's no-login, anonymous-by-default design.
  */
 
 export interface FeedbackPayload {

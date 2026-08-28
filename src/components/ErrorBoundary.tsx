@@ -37,7 +37,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     // design (see the project's privacy stance) — this logs to the
     // console only, for local debugging, and never sends anything
     // anywhere.
-    console.error('Kathaipoma crashed:', error, info.componentStack)
+    console.error('AUREVA crashed:', error, info.componentStack)
   }
 
   render() {

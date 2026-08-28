@@ -1,4 +1,4 @@
-# Kathaipoma — Women's Health AI
+# AUREVA — Women's Health AI
 
 A private, anonymous, bilingual (English / தமிழ்) health awareness and
 **preliminary screening** companion — not a diagnosis tool, not a hospital.
@@ -48,7 +48,7 @@ No `.env`, no API keys, no backend required — everything runs client-side.
 - **About & Privacy** — the no-login/no-tracking commitments, spelled out.
 - **Floating ♀ background** — ambient, CSS-only, respects
   `prefers-reduced-motion`.
-- **Kathaipoma AI** — a small dismissible assistant bubble that greets and
+- **AUREVA AI** — a small dismissible assistant bubble that greets and
   explains, with its own listen button.
 - Installable **PWA**: manifest, offline app-shell caching via Workbox
   (`vite-plugin-pwa`), so the screening still loads with a flaky connection.
@@ -99,13 +99,13 @@ GitHub Pages automatically on every push to `main`. In your repo settings,
 set **Settings → Pages → Source → GitHub Actions**.
 
 If this repo is *not* deployed at the domain root (i.e. it's a project page
-like `username.github.io/kathaipoma`), set the Vite base path before
+like `username.github.io/aureva`), set the Vite base path before
 building:
 
 ```ts
 // vite.config.ts
 export default defineConfig({
-  base: '/kathaipoma/', // your repo name
+  base: '/aureva/', // your repo name
   // ...
 })
 ```
@@ -175,7 +175,7 @@ React Hook Form + Zod · react-i18next · Web `SpeechSynthesis` API ·
 
 ## Disclaimer
 
-Kathaipoma provides health **awareness and preliminary screening only**. It
+AUREVA provides health **awareness and preliminary screening only**. It
 is not a medical device and does not diagnose disease. Anyone using it
 should be encouraged to consult a qualified doctor for actual diagnosis and
 treatment — this is reinforced throughout the UI (emergency warning card,

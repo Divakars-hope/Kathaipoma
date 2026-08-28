@@ -2,7 +2,7 @@ rules_version = '2';
 
 // Apply these in the Firebase Console: Firestore Database → Rules.
 //
-// Anyone can SUBMIT feedback (no login, matching Kathaipoma's anonymous
+// Anyone can SUBMIT feedback (no login, matching AUREVA's anonymous
 // design) but no one can read, edit, or delete it through the client SDK —
 // only via the Firebase Console or an authenticated admin tool, keeping
 // feedback private to the people who need to act on it.
